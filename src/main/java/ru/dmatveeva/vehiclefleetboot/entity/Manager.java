@@ -2,6 +2,9 @@ package ru.dmatveeva.vehiclefleetboot.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -35,7 +38,13 @@ public class Manager extends AbstractBaseEntity {
     @Column(name = "second_name")
     private String secondName;
 
-    @ManyToMany(mappedBy = "manager")
+    //@ManyToMany(mappedBy = "manager")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "enterprises_managers",
+            joinColumns = @JoinColumn(name = "manager_id"),
+            inverseJoinColumns = @JoinColumn(name = "enterprise_id")
+    )
     @Fetch(FetchMode.JOIN)
-    private List<Enterprise> enterprise;
+    private List<Enterprise> enterprises;
 }

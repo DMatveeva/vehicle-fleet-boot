@@ -67,6 +67,7 @@ public class ReactiveTrackGeneratorService {
 
     private JSONArray getGeometryFromResponse(ResponseEntity<String> response) {
         JSONObject json = new JSONObject(response.getBody());
+
         try {
             var geometryEncoded = json.getJSONArray("routes").getJSONObject(0).getString("geometry");
             return GeometryDecoder.decodeGeometry(geometryEncoded, false);

@@ -48,11 +48,15 @@ services:
       - "kafka"
 
   db-app:
-    image: postgis/postgis:latest
+    image: postgis/postgis:16-master
+    networks:
+      - kafka-net
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1
       POSTGRES_DB: postgresql
+    expose:
+      - 5432
     ports:
       - "5432:5432"
     healthcheck:
@@ -64,10 +68,13 @@ services:
   v-app:
     build:
       context: .
+      dockerfile: Dockerfile
+    networks:
+      - kafka-net
     ports:
       - "8080:8080"
     expose:
       - 8080
     depends_on:
-      db-app:
-        condition: service_healthy
+      - "db-app"
+      - "kafka"

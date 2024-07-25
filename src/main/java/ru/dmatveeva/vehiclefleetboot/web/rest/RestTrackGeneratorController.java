@@ -14,6 +14,7 @@ import ru.dmatveeva.vehiclefleetboot.entity.vehicle.Vehicle;
 import ru.dmatveeva.vehiclefleetboot.repository.EnterpriseRepository;
 import ru.dmatveeva.vehiclefleetboot.repository.VehicleRepository;
 import ru.dmatveeva.vehiclefleetboot.service.generate.TrackGeneratorService;
+import ru.dmatveeva.vehiclefleetboot.to.GenerateRequestDto;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class RestTrackGeneratorController {
 
 
-    static final String REST_URL = "/track/generate";
+    static final String REST_URL = "rest/track/generate";
 
     @Autowired VehicleRepository vehicleRepository;
 
@@ -47,13 +48,29 @@ public class RestTrackGeneratorController {
     }*/
 
     @PostMapping("tracks/generate/vehicle/{id}")
+    public ResponseEntity<Boolean> generateTrack(
+            @PathVariable int id,
+            @RequestBody GenerateRequestDto generateRequestDto
+            /*@RequestParam double[] start,
+            @RequestParam double[] finish,
+            @RequestParam int lengthKm,
+            @RequestParam int maxSpeedKmH,
+            @RequestParam int maxAccelerationMSS*/) {
+
+      //  Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
+        trackGeneratorService.generateTrackInRealTime(generateRequestDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    /*@PostMapping("tracks/generate/vehicle/{id}")
     public ResponseEntity<Boolean> generateTrack( @PathVariable int id, @RequestBody String body) {
 
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
         trackGeneratorService.generateTrackInRealTime(body);
 
         return ResponseEntity.ok().build();
-    }
+    }*/
 
     @PostMapping("tracks/generate/losangeles")
     public ResponseEntity<Boolean> generateTracksForLosAngeles(@RequestParam int numTracks) {

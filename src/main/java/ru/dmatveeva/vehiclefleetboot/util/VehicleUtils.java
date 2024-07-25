@@ -67,7 +67,7 @@ public class VehicleUtils {
     }
 
     public static void checkEnterpriseIsConsistent(Manager manager, Integer enterprise_id) {
-        boolean isEnterpriseConsistentWithManager = manager.getEnterprise().stream()
+        boolean isEnterpriseConsistentWithManager = manager.getEnterprises().stream()
                 .map(AbstractBaseEntity::getId)
                 .anyMatch(id -> id.equals(enterprise_id));
         if (!isEnterpriseConsistentWithManager) {

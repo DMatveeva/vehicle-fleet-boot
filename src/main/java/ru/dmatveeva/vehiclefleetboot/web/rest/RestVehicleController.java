@@ -57,7 +57,7 @@ public class RestVehicleController {
         List<Vehicle> vehicles = new ArrayList<>();
     //    Manager manager = SecurityUtil.getAuthManager();
         Manager manager = managerRepository.findByLogin("amy.lee@gmail.com");
-        List<Enterprise> enterprises = manager.getEnterprise();
+        List<Enterprise> enterprises = manager.getEnterprises();
         for (Enterprise enterprise: enterprises) {
             vehicles.addAll(vehicleRepository.findAllByEnterprise(enterprise));
         }

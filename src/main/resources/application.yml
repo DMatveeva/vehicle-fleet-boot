@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://db-app:5432/postgres
     username: postgres
     password: 1
     driver-class-name: org.postgresql.Driver
@@ -10,9 +10,16 @@ spring:
       hibernate:
         dialect: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
         format_sql: true
-
     show-sql: true
-   # open-in-view: false
+  kafka:
+    bootstrap-servers: kafka:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    open-in-view: false
+
+  thymeleaf:
+    cache: false
 
 logging:
   level:
@@ -26,3 +33,16 @@ topic:
     name: t.vehicle.create
   track:
     name: t.track.generate
+---
+spring:
+  profiles:
+    active: "local"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+  kafka:
+    bootstrap-servers: localhost:9092
+    admin:
+      properties:
+        request:
+          timeout:
+            ms: 1000

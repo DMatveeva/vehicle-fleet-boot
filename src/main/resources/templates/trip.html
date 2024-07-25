@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Trip</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=451bd878-3f92-4bb6-a0de-6d818d9b69b9&lang=en_US" type="text/javascript">
+    </script>
+
+    <script th:inline="javascript">
+        ymaps.ready(function () {
+            var c = /*[[${center}]]*/ [];
+            console.log(c);
+            var myMap = new ymaps.Map('map', {
+                center: c,
+                zoom: 9,
+                controls: []
+            });
+            /*<![CDATA[*/
+
+            var points = /*[[${points}]]*/ [1][1];
+            console.log(points);
+
+            /*]]>*/
+
+            // Создание маршрута.
+            var multiRoute = new ymaps.multiRouter.MultiRoute({
+
+                referencePoints: points
+            }, {
+                // Внешний вид путевых точек.
+                wayPointStartIconColor: "#FFFFFF",
+                wayPointStartIconFillColor: "#B3B3B3",
+                // Внешний вид линии активного маршрута.
+                routeActiveStrokeWidth: 8,
+                routeActiveStrokeStyle: 'solid',
+                routeActiveStrokeColor: "#002233",
+                // Внешний вид линий альтернативных маршрутов.
+                routeStrokeStyle: 'dot',
+                routeStrokeColor: 'rgba(0, 0, 0, 0.0)',
+                routeStrokeWidth: 0,
+                boundsAutoApply: true
+            });
+
+            // Добавление маршрута на карту.
+            myMap.geoObjects.add(multiRoute);
+        });
+    </script>
+</head>
+
+<body>
+<div id="map" style="width: 1200px; height: 550px"></div>
+</body>
+
+</html>

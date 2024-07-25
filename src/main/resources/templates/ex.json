@@ -1,0 +1,5 @@
+{
+  "tables": {
+    "tags": [ { "code": "1", "name": "tag1" }, { "code": "2", "name": "tag2" } ]
+  }
+}

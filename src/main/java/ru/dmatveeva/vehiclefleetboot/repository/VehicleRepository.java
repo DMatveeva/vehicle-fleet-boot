@@ -1,5 +1,6 @@
 package ru.dmatveeva.vehiclefleetboot.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.dmatveeva.vehiclefleetboot.entity.Enterprise;
 import ru.dmatveeva.vehiclefleetboot.entity.vehicle.Vehicle;
@@ -11,8 +12,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
  //   List<Vehicle> findAllOrderById();
     void deleteById(Integer id);
     List<Vehicle> findAllByEnterprise(Enterprise enterprise);
+    List<Vehicle> getAllByEnterprise(Enterprise enterprise, Pageable pageable);
     List<Vehicle> findAllByEnterpriseOrderById(Enterprise enterprise);
-
 
 //    List<Vehicle> findAllByPa(int offset, int pageSize);
 
@@ -23,8 +24,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     Vehicle get(int id);
 
     List<Vehicle> getByEnterprise(Enterprise enterprise);
-
-    List<Vehicle> getByEnterprisePaginated(Enterprise enterprise, int offset, int pageSize);
 
     Vehicle save(Vehicle vehicle, Integer modelId, Integer enterpriseId);*/
 }

@@ -40,7 +40,7 @@ public class VehicleService {
         List<Vehicle> vehicles = new ArrayList<>();
     //    Manager manager = SecurityUtil.getAuthManager();
         Manager manager = managerRepository.findByLogin("amy.lee@gmail.com");
-        List<Enterprise> enterprises = manager.getEnterprise();
+        List<Enterprise> enterprises = manager.getEnterprises();
         for (Enterprise enterprise: enterprises) {
             vehicles.addAll(vehicleRepository.findAllByEnterprise(enterprise));
         }
@@ -68,7 +68,7 @@ public class VehicleService {
         newVehicle.setEnterprise(enterprise);
 
         Vehicle created = vehicleRepository.save(newVehicle);
-        producer.sendMessage(VehicleUtils.getVehicleTo(created));
+       // producer.sendMessage(VehicleUtils.getVehicleTo(created));
 
         logger.info("Vehicle with id {} created", created.getId());
         return created;

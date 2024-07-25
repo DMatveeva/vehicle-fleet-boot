@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:spring="http://www.w3.org/1999/XSL/Transform"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicles</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+
+</head>
+<body>
+<script type="text/javascript" src="/js/fleet.js" defer></script>
+
+<h1 style="text-align:center" >Vehicles</h1>
+<div style="text-align: center">
+    <a style="text-align:center" th:href="@{/vehicles/create}">Add vehicle</a>
+</div>
+
+
+<table  class="table table-bordered">
+    <tr>
+        <th>Vin</th>
+        <th>Model</th>
+        <th>Enterprise</th>
+        <th>Color</th>
+        <th>Cost (USD)</th>
+        <th>Mileage</th>
+        <th>Production Year</th>
+        <th>Purchase Date</th>
+    </tr>
+    <tr th:each="vehicle : ${vehicles}">
+        <td>
+            <a th:href="@{/vehicles/{id}(id=${vehicle.id})}" th:text="${vehicle.vin}" />
+        </td>
+        <td th:text="${vehicle.vehicleModel.name}"/>
+        <td th:text="${vehicle.enterprise.name}"/>
+        <td th:text="${vehicle.color}"/>
+        <td th:text="${vehicle.costUsd}"/>
+        <td th:text="${vehicle.mileage}"/>
+        <td th:text="${vehicle.productionYear}"/>
+        <td th:text="${vehicle.purchaseDate}"/>
+
+        <td><a th:href="@{/vehicles/update/{id}(id=${vehicle.id})}">Update</a></td>
+        <td><a th:href="@{/vehicles/delete/{id}(id=${vehicle.id})}">Delete</a></td>
+        <td><a th:href="@{/vehicles/report/{id}(id=${vehicle.id})}">Report</a></td>
+    </tr>
+</table>
+<!--<div  class="pagination"
+     th:each="vehicle : ${vehicles}">
+    <a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"
+       th:text=${pageNumber}
+       th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+</div>-->
+    <!--		Start Pagination -->
+   <!-- <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>-->
+</body>
+</html>

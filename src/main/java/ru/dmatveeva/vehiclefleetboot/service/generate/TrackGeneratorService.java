@@ -20,6 +20,7 @@ import ru.dmatveeva.vehiclefleetboot.entity.vehicle.VehicleCoordinate;
 import ru.dmatveeva.vehiclefleetboot.repository.TrackRepository;
 import ru.dmatveeva.vehiclefleetboot.repository.VehicleCoordinateRepository;
 import ru.dmatveeva.vehiclefleetboot.service.Producer;
+import ru.dmatveeva.vehiclefleetboot.to.GenerateRequestDto;
 import ru.dmatveeva.vehiclefleetboot.util.GeometryDecoder;
 
 import javax.transaction.Transactional;
@@ -49,9 +50,8 @@ public class TrackGeneratorService {
     }
 
     @SneakyThrows
-    public void generateTrackInRealTime(String body) {
-        producer.sendGenerateTrackMessage(body);
-        //generateTrack(vehicle, start, finish, lengthKm, maxSpeedKmH, maxAccelerationMSS, 10000, LocalDateTime.now());
+    public void generateTrackInRealTime(GenerateRequestDto generateRequestDto) {
+        producer.sendGenerateTrackMessage(generateRequestDto);
     }
 
     public void generateTrackInstantly(Vehicle vehicle, double[] start, double[] finish,

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Enterprises</title>
+</head>
+<body>
+<h1>Enterprises</h1>
+<table border="1" id="all-enterprises">
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Time Zone</th>
+    </tr>
+    <tr th:id="${enterprise.id}" th:each="enterprise : ${enterprises}">
+        <td>
+            <a th:href="@{/vehicles(enterpriseId=${enterprise.id})}"
+               th:text="${enterprise.name}"></a>
+        </td>
+        <td th:text="${enterprise.city}"/>
+        <td th:text="${enterprise.localTimeZone}"/>
+
+    </tr>
+</table>
+
+</body>
+</html>
