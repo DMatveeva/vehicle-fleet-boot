@@ -8,6 +8,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     GRANT ALL PRIVILEGES ON DATABASE fleet TO postgres;
 EOSQL
 
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/init.sql
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/populateDb.sql
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/populateWithCoordinates.sql
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/create_tables_DB.sql
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/create_tables_DB.sql
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/populate_tracks_DB.sql
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "fleet" < /docker-entrypoint-initdb.d/populate_coordinates_DB.sql

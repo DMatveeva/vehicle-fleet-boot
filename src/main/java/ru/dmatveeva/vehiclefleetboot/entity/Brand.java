@@ -6,5 +6,11 @@ public enum Brand {
 
     FORD,
 
-    VOLVO;
+    VOLVO,
+
+    BMW,
+
+    INFINITY,
+
+    LADA
 }

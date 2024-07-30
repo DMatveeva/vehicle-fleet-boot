@@ -45,17 +45,17 @@
 
 <h3 style="text-align:center">Trips</h3>
 
-<table  class="table table-bordered">
+<table class="table table-bordered text-align:center">
     <tr>
         <th>Started</th>
         <th>Finished</th>
     </tr>
-    <tr th:each="track : ${tracks}">
+    <tr class="text-align:center" th:each="track : ${tracks}">
         <td>
             <a th:href="@{/routes/track/{id}(id=${track.id})}"
-               th:text="${track.started}"/>
+                th:text="${#temporals.format(track.started,'yyyy/MM/dd HH:mm')}"/>
         </td>
-        <td th:text="${track.finished}"/>
+        <td th:text="${#temporals.format(track.finished,'yyyy/MM/dd HH:mm')}"/>
     </tr>
 </table>
 
