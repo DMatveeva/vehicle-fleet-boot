@@ -93,16 +93,16 @@ public class VehicleController {
     public String update(@PathVariable int id,  HttpServletRequest request, Model model){
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
-        String dateFormatted = vehicle.getPurchaseDate().format(formatter);
-        model.addAttribute("pDate", dateFormatted);
-
         User user = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         Manager manager = managerRepository.findByLogin(user.getUsername());
         List<Enterprise> enterprises = manager.getEnterprises();
         model.addAttribute("enterprises", enterprises);
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("models", getVehicleModels(vehicle));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        String dateFormatted = vehicle.getPurchaseDate().format(formatter);
+        model.addAttribute("purchaseDateVal", dateFormatted);
 
         return "vehicleForm.html";
     }
@@ -130,7 +130,7 @@ public class VehicleController {
                                  @RequestParam("costUsd") BigDecimal costUsd,
                                  @RequestParam("mileage") Integer mileage,
                                  @RequestParam("productionYear") Integer productionYear,
-                                 @RequestParam("purchaseDate") String purchaseDateStr,
+                                 @RequestParam("purchaseDateVal") String purchaseDateStr,
                                  @RequestParam("enterprise") Integer enterpriseId
                                  ) {
         VehicleModel vehicleModel = vehicleModelRepository.findById(vehicleModelId).orElseThrow();

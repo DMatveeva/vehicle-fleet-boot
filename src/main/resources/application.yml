@@ -20,10 +20,12 @@ spring:
 
   thymeleaf:
     cache: false
+    mode: HTML
 
 logging:
   level:
     org.hibernate.orm.jdbc.bind: trace
+    org.thymeleaf: trace
 
 server:
   port: 8080

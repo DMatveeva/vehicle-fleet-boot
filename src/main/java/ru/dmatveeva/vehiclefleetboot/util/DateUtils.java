@@ -9,14 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class DateUtils {
 
     public static LocalDateTime getLdtFromString(String ldtStr) {
-        DateTimeFormatter formatter;
-        if (ldtStr.length() == 19) {
-            formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
-        } else if (ldtStr.length() == 18) {
-            formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
-        } else {
-            throw new RuntimeException();
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         return LocalDateTime.parse(ldtStr, formatter);
     }
 

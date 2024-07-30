@@ -46,7 +46,7 @@
         <td th:text="${vehicle.costUsd}"/>
         <td th:text="${vehicle.mileage}"/>
         <td th:text="${vehicle.productionYear}"/>
-        <td th:text="${vehicle.purchaseDate}"/>
+        <td th:text="${#temporals.format(vehicle.purchaseDate,'yyyy/MM/dd HH:mm')}"/>
 
         <td><a th:href="@{/vehicles/update/{id}(id=${vehicle.id})}">Update</a></td>
         <td><a th:href="@{/vehicles/delete/{id}(id=${vehicle.id})}">Delete</a></td>
