@@ -8,14 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TrackRepository extends JpaRepository<Track, Integer> {
-
-    //Track get(int id);
-
-   // List<Track> getAllByVehicleAndByPeriodBetween(Vehicle vehicle, LocalDateTime startUTC, LocalDateTime endUTC);
     List<Track> findAllByVehicleAndStartedAfterAndFinishedBefore(Vehicle vehicle, LocalDateTime startUTC, LocalDateTime endUTC);
 
     List<Track> getAllByVehicle(Vehicle vehicle);
-
-   // Track save(Track track);
-
 }

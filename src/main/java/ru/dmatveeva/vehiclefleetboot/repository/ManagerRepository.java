@@ -5,5 +5,4 @@ import ru.dmatveeva.vehiclefleetboot.entity.Manager;
 
 public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     Manager findByLogin(String login);
-
 }

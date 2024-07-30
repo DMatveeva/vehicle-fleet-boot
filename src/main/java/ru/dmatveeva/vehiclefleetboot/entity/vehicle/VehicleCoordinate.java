@@ -15,13 +15,6 @@ import ru.dmatveeva.vehiclefleetboot.entity.Track;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/*@NamedQueries({
-@NamedQuery(name = VehicleCoordinate.BY_VEHICLE_AND_PERIOD,
-        query = "SELECT c FROM VehicleCoordinate c WHERE c.vehicle=?1 and c.visited between ?2 and ?3"),
-@NamedQuery(name = VehicleCoordinate.BY_TRACK,
-        query = "SELECT c FROM VehicleCoordinate c WHERE c.track=?1 order by c.visited")
-})*/
-
 @Entity
 @Table(name = "vehicle_coordinates")
 @Getter
@@ -29,9 +22,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class VehicleCoordinate extends AbstractBaseEntity implements Serializable {
 
-    /*public static final String BY_TRACK = "VehicleCoordinate.getByTrack";
-    public static final String BY_VEHICLE_AND_PERIOD = "VehicleCoordinate.getByVehicleAndPeriod";
-*/
     private static int SRID = 4326;
 
     @OneToOne
@@ -50,6 +40,5 @@ public class VehicleCoordinate extends AbstractBaseEntity implements Serializabl
     private LocalDateTime visited;
 
     @Column(columnDefinition = "geometry(Point,4326)", name = "position")
-   // @Column(columnDefinition = "Geometry", nullable = true)
     private Point position;
 }

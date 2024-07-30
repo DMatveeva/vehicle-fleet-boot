@@ -39,7 +39,6 @@ public class Enterprise extends AbstractBaseEntity{
     private List<Driver> drivers;
 
     @OneToMany(mappedBy = "enterprise")
-  //  @Fetch(FetchMode.JOIN)
     @JsonIgnore
     private List<Vehicle> vehicles;
 

@@ -2,12 +2,15 @@ package ru.dmatveeva.vehiclefleetboot.to;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Report {
-
     @JsonProperty
     String type;
 
@@ -43,43 +46,6 @@ public class Report {
         this.type = type;
         this.period = period;
         this.start = start;
-        this.end = end;
-    }
-
-    // Getters are typically automatically serialized
-    public Map<String, Integer> getPeriodToValue() {
-        return periodToValue;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public LocalDate getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
-    public LocalDate getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDate end) {
         this.end = end;
     }
 }

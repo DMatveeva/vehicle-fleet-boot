@@ -15,9 +15,6 @@ import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
-/*@NamedQueries({
-        @NamedQuery(name = Manager.BY_LOGIN, query = "SELECT m FROM Manager m WHERE m.login=?1")
-})*/
 @Entity
 @Table(name = "managers")
 @Getter
@@ -38,7 +35,6 @@ public class Manager extends AbstractBaseEntity {
     @Column(name = "second_name")
     private String secondName;
 
-    //@ManyToMany(mappedBy = "manager")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "enterprises_managers",

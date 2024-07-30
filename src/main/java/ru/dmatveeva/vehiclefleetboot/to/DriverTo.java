@@ -1,9 +1,13 @@
 package ru.dmatveeva.vehiclefleetboot.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
+@AllArgsConstructor
+@ToString
 public class DriverTo {
 
     @JsonProperty
@@ -29,29 +33,4 @@ public class DriverTo {
 
     @JsonProperty
     private final boolean isActive;
-
-    public DriverTo(Integer id, String firstName, String secondName, BigDecimal salaryUSD, int drivingExperienceYears, int enterprise_id, int vehicle_id, boolean isActive) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.salaryUSD = salaryUSD;
-        this.drivingExperienceYears = drivingExperienceYears;
-        this.enterprise_id = enterprise_id;
-        this.vehicle_id = vehicle_id;
-        this.isActive = isActive;
-    }
-
-    @Override
-    public String toString() {
-        return "DriverTo{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", salaryUSD=" + salaryUSD +
-                ", drivingExperienceYears=" + drivingExperienceYears +
-                ", enterprise_id=" + enterprise_id +
-                ", vehicle_id=" + vehicle_id +
-                ", isActive=" + isActive +
-                '}';
-    }
 }

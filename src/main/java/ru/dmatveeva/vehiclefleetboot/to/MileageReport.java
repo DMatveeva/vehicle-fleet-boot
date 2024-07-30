@@ -1,12 +1,15 @@
 package ru.dmatveeva.vehiclefleetboot.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 
+@Getter
+@Setter
 public class MileageReport extends Report {
-
     @JsonProperty
     public int vehicleId;
 
@@ -19,14 +22,4 @@ public class MileageReport extends Report {
         super(periodToValue, type, period, start, end);
         this.vehicleId = vehicleId;
     }
-
-    public int getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
-
 }
