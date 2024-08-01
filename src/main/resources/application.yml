@@ -32,7 +32,7 @@ server:
 
 topic:
   vehicle:
-    name: t.vehicle.create
+    name: t.vehicle.generate
   track:
     name: t.track.generate
 ---

@@ -18,7 +18,6 @@ public class VehicleFleetBootApplication {
         log.info("Before Starting VehicleFleetBootApplication");
         SpringApplication.run(VehicleFleetBootApplication.class, args);
         log.info("VehicleFleetBootApplication started");
-
     }
 
 }

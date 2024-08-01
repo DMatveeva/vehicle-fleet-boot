@@ -26,11 +26,9 @@ import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
 @Service
 public class VehicleGeneratorService {
-
     private final VehicleRepository vehicleRepository;
     private final VehicleModelRepository vehicleModelRepository;
     private final DriverRepository driverRepository;
-
     private final EnterpriseRepository enterpriseRepository;
 
     public VehicleGeneratorService(VehicleRepository vehicleRepository, VehicleModelRepository vehicleModelRepository, DriverRepository driverRepository, EnterpriseRepository enterpriseRepository) {
@@ -44,15 +42,12 @@ public class VehicleGeneratorService {
     private final int MAX_MILEAGE = 500_000;
     private final int OLDEST_YEAR_OF_PRODUCTION = 1980;
     private final int NEWEST_YEAR_OF_PRODUCTION = 2020;
-
     private final int MAX_NUM_DRIVERS_FOR_VEHICLE = 2;
 
     private static int driverNum = 0;
 
     private static final LocalDateTime MIN_DATE_OF_PURCHASE_2000 = LocalDateTime.of(2000, 1, 1, 0,0);
     private static final LocalDateTime MAX_DATE_OF_PURCHASE_2020 = LocalDateTime.of(2020, 1, 1, 0,0);;
-
-
     List<VehicleModel> vehicleModels;
 
     List<String> colors = List.of(
@@ -73,7 +68,6 @@ public class VehicleGeneratorService {
     private void populateVehicleModels() {
         vehicleModels = vehicleModelRepository.findAll();
     }
-
 
     public void generateVehiclesForEnterprises(List<Integer> enterpriseIds, int numVehicles) {
         populateVehicleModels();
@@ -162,10 +156,6 @@ public class VehicleGeneratorService {
         return new Random().nextInt(2, 41);
     }
 
-    /*
-        this.isActive = isActive;
-    }*/
-
     private boolean getIsDriverActive() {
         int randomIndex = new Random().nextInt(1, 11);
         return randomIndex == 10;
@@ -200,6 +190,5 @@ public class VehicleGeneratorService {
     private int getProductionYear() {
         return new Random().nextInt(OLDEST_YEAR_OF_PRODUCTION, NEWEST_YEAR_OF_PRODUCTION);
     }
-
 
 }

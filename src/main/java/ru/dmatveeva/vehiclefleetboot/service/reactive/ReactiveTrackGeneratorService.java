@@ -28,6 +28,7 @@ import ru.dmatveeva.vehiclefleetboot.util.GeometryDecoder;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,20 +38,49 @@ import java.util.List;
 public class ReactiveTrackGeneratorService {
 
     private final static String OPENROUTE_URI = "https://api.openrouteservice.org/v2/directions/driving-car";
-
     @Autowired
     TrackRepository trackRepository;
-
     @Autowired
     VehicleCoordinateRepository vehicleCoordinateRepository;
 
-    @Autowired
-    VehicleCoordinateRepository vehicleCoordinateRepositoryж;
+    public void generateTrackRealTime(Vehicle vehicle, double[] start, double[] finish,
+                                      int maxSpeedKmH, int delay) throws JsonProcessingException {
+
+        var geometries = getGeometryFromOpenroute(start, finish, maxSpeedKmH).toString();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        var geometriesStream =
+                Arrays.stream(objectMapper.readValue(geometries, Object[].class)).map(o -> (ArrayList<Double>) o);
+
+
+        ZoneId zoneId = ZoneId.of(vehicle.getEnterprise().getLocalTimeZone());
+
+        Track track = new Track();
+        track.setVehicle(vehicle);
+        track.setStarted(LocalDateTime.now());
+        trackRepository.save(track);
+
+        Flux.fromStream(geometriesStream)
+                .delayUntil(d -> Mono.delay(Duration.ofSeconds(delay)))
+                .map(latLon -> createCoordinate(vehicle, latLon, track))
+                .map(vehicleCoordinateRepository::save)
+                .log()
+                .subscribe(c -> log.debug(c.toString()));
+
+        long sec = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) + 10L;
+        try {
+            Thread.sleep(100000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        track.setFinished(LocalDateTime.ofEpochSecond(sec, 0, ZoneOffset.UTC));
+        trackRepository.save(track);
+    }
 
     private JSONArray getGeometryFromOpenroute(double[] start, double[] finish, int maxSpeedKmH) {
 
         String body = String.format("{\"coordinates\":[%s,%s], \"maximum_speed\":%s}",
-                        coordinatesToStr(start), coordinatesToStr(finish), maxSpeedKmH);
+                coordinatesToStr(start), coordinatesToStr(finish), maxSpeedKmH);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
@@ -75,6 +105,7 @@ public class ReactiveTrackGeneratorService {
             throw new RuntimeException("Error in Openroute response");
         }
     }
+
     private static HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "5b3ce3597851110001cf6248a454b30fc2664363888082aa092ef980");
@@ -84,66 +115,10 @@ public class ReactiveTrackGeneratorService {
     }
 
     String coordinatesToStr(double[] arr) {
-        return "[" + arr[0] + "," +arr[1] + "]";
+        return "[" + arr[0] + "," + arr[1] + "]";
     }
 
-    public void generateTrackRealTime(Vehicle vehicle, double[] start, double[] finish,
-                              int maxSpeedKmH, int delay/*, LocalDateTime startDate*/) throws JsonProcessingException {
-
-/*        var geometryStr = getGeometryFromOpenroute(start, finish, maxSpeedKmH).toString();
-        var geometryStrArray = geometryStr.substring(2, geometryStr.length()-2).split("],\\[");
-        Arrays.stream(geometryStrArray)
-                .map(s -> s.split(","))
-                .map(a -> (new JSONArray()).put(a[0]).put(a[1]))
-                .collect(Collectors.toList());*/
-
-
-        var geometries = getGeometryFromOpenroute(start, finish, maxSpeedKmH).toString();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        var geometriesStream =
-                Arrays.stream(objectMapper.readValue(geometries, Object[].class)).map(o -> (ArrayList<Double>) o);
-
-
-
-        ZoneId zoneId = ZoneId.of(vehicle.getEnterprise().getLocalTimeZone());
-
-        Track track = new Track();
-        track.setVehicle(vehicle);
-        track.setStarted(LocalDateTime.now());
-        trackRepository.save(track);
-
-       // LocalDateTime coordinateDate = startDate;
-       // Flux<JSONArray> geometryFlux =
-                Flux.fromStream(geometriesStream)
-                        .delayUntil(d -> Mono.delay(Duration.ofSeconds(delay)))
-                        //.delayElements(Duration.ofSeconds(delay))
-                        .map(latLon ->  createAndSaveCoordinate(vehicle, latLon, track) )
-                        .log()
-                        .subscribe(c -> log.debug(c.toString()));
-
-      /*  g
-
-
-        for (int i = 0; i < geometryArray.length(); i++) {
-            JSONArray latLon = geometryArray.getJSONArray(i);
-            createAndSaveCoordinate(vehicle, latLon, track, coordinateDate);
-
-            long sec = coordinateDate.toEpochSecond(ZoneOffset.UTC) + 10L;
-            coordinateDate = LocalDateTime.ofEpochSecond(sec, 0, ZoneOffset.UTC);
-            if (delay > 0) {
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        track.setFinished(coordinateDate);
-        trackRepository.save(track);*/
-    }
-
-    private VehicleCoordinate createAndSaveCoordinate(Vehicle vehicle, List<Double> latLon, Track track) {
+    private VehicleCoordinate createCoordinate(Vehicle vehicle, List<Double> latLon, Track track) {
         double lat = latLon.get(0);
         double lon = latLon.get(1);
 
@@ -159,7 +134,6 @@ public class ReactiveTrackGeneratorService {
 
         vehicleCoordinate.setPosition(point);
         vehicleCoordinate.setVisited(LocalDateTime.now());
-    //    vehicleCoordinateRepository.save(vehicleCoordinate);
         return vehicleCoordinate;
     }
 }
