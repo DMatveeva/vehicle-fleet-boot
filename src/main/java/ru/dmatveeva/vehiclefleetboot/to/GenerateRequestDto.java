@@ -9,7 +9,7 @@ import lombok.Setter;
 public class GenerateRequestDto {
 
     @JsonProperty
-    Integer id;
+    Integer vehicleId;
 
     @JsonProperty
     double[] start;

@@ -14,11 +14,9 @@ import ru.dmatveeva.vehiclefleetboot.repository.ManagerRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = RestEnterpriseController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/rest/enterprise", produces = MediaType.APPLICATION_JSON_VALUE)
 
 public class RestEnterpriseController {
-    static final String REST_URL = "/rest/enterprises";
-
     @Autowired
     ManagerRepository managerRepository;
 

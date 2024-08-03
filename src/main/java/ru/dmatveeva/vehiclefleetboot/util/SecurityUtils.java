@@ -1,18 +1,24 @@
 package ru.dmatveeva.vehiclefleetboot.util;
 
-public class SecurityUtil {
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
-    private SecurityUtil() {
+public class SecurityUtils {
+
+    private SecurityUtils() {
     }
 
-  /*  public static AuthorizedManager safeGet() {
+   public static String getUserName() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return null;
         }
-        Object principal = auth.getPrincipal();
-        return (principal instanceof AuthorizedManager) ? (AuthorizedManager) principal : null;
+        User user = (User) auth.getPrincipal();
+        return user.getUsername();
     }
+
+     /*
 
     public static AuthorizedManager get() {
         return requireNonNull(safeGet(), "No authorized user found");
