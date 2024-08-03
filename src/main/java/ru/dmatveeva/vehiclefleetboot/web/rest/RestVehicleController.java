@@ -55,7 +55,7 @@ public class RestVehicleController {
         return VehicleUtils.getVehicleTos(vehicles);
     }
 
-    @GetMapping()
+    @GetMapping("/page")
     public List<VehicleTo> getAll(TimeZone timezone,
                                            @RequestParam int offset, @RequestParam int pageSize) {
         List<VehicleTo> vehicleTos = new ArrayList<>();

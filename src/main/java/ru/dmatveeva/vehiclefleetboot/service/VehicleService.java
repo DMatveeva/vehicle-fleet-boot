@@ -29,7 +29,7 @@ public class VehicleService {
     ManagerRepository managerRepository;
 
     @Autowired
-    Producer producer;
+    GeneratorProducer generatorProducer;
 
     public List<VehicleTo> getAll() {
         log.info("Get all vehicles");

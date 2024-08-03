@@ -9,7 +9,7 @@ import ru.dmatveeva.vehiclefleetboot.to.GenerateRequestDto;
 
 @Slf4j
 @Component
-public class Producer {
+public class GeneratorProducer {
 
     @Value("${topic.vehicle.name}")
     String vehicleTopic;
@@ -18,7 +18,7 @@ public class Producer {
     @Autowired
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public Producer(KafkaTemplate<String, Object> kafkaTemplate) {
+    public GeneratorProducer(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

@@ -73,14 +73,6 @@ VALUES (100010, 'Mia', 'Toretto', 3000, 5, 100004, 100007, false);
 INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
 VALUES (100011, 'Brian', 'O''Conner', 4000, 5, 100004, 100007, false);
 INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
-VALUES (100015, 'D1', 'D1', 1000, 20, 100002, null, false);
-INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
-VALUES (100016, 'D2', 'D2', 1000, 20, 100002, null, false);
-INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
-VALUES (100017, 'D3', 'D3', 1000, 20, 100002, null, false);
-INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
-VALUES (100018, 'D4', 'D4', 1000, 20, 100002, null, false);
-INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
 VALUES (100030, 'FN0', 'SN0', 251.54, 11, 100002, 100029, false);
 INSERT INTO public.drivers (id, first_name, second_name, salary_usd, experience, enterprise_id, vehicle_id, is_active)
 VALUES (100032, 'FN0', 'SN0', 11.5, 19, 100003, 100031, false);

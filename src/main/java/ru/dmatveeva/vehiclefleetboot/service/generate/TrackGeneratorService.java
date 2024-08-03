@@ -19,7 +19,7 @@ import ru.dmatveeva.vehiclefleetboot.entity.vehicle.Vehicle;
 import ru.dmatveeva.vehiclefleetboot.entity.vehicle.VehicleCoordinate;
 import ru.dmatveeva.vehiclefleetboot.repository.TrackRepository;
 import ru.dmatveeva.vehiclefleetboot.repository.VehicleCoordinateRepository;
-import ru.dmatveeva.vehiclefleetboot.service.Producer;
+import ru.dmatveeva.vehiclefleetboot.service.GeneratorProducer;
 import ru.dmatveeva.vehiclefleetboot.to.GenerateRequestDto;
 import ru.dmatveeva.vehiclefleetboot.util.GeometryDecoder;
 
@@ -33,7 +33,8 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class TrackGeneratorService {
 
-    @Autowired Producer producer;
+    @Autowired
+    GeneratorProducer generatorProducer;
     @Autowired TrackRepository trackRepository;
     @Autowired VehicleCoordinateRepository coordinateRepository;
 
@@ -51,7 +52,7 @@ public class TrackGeneratorService {
 
     @SneakyThrows
     public void generateTrackInRealTime(GenerateRequestDto generateRequestDto) {
-        producer.sendGenerateTrackMessage(generateRequestDto);
+        generatorProducer.sendGenerateTrackMessage(generateRequestDto);
     }
 
     public void generateTrackInstantly(Vehicle vehicle, double[] start, double[] finish,

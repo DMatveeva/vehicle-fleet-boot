@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.dmatveeva.vehiclefleetboot.repository.VehicleRepository;
+import ru.dmatveeva.vehiclefleetboot.service.generate.ReactiveTrackGeneratorService;
 
 @SpringBootTest
 class ReactiveTrackGeneratorServiceTest {
 
-    @Autowired ReactiveTrackGeneratorService reactiveTrackGeneratorService;
+    @Autowired
+    ReactiveTrackGeneratorService reactiveTrackGeneratorService;
     @Autowired
     VehicleRepository vehicleRepository;
 

@@ -90,7 +90,7 @@
             <artifactId>hibernate-spatial</artifactId>
             <version>6.1.6.Final</version>
         </dependency>
-        
+
         <!--JSON-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
