@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     @Autowired
     ManagerRepository managerRepository;
 
@@ -27,18 +26,11 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Manager not found: " + username);
         }
 
-       // PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-       /* List<String> roles = new ArrayList<>();
-        roles.add(user.getRole());*/
         return User.withDefaultPasswordEncoder()
                 .username(manager.getLogin())
                 .password(manager.getPassword())
                 .roles("USER")
                 .build();
-
-       /* return new AuthorizedManager(manager);
-        return new User(manager.getLogin(), encoder.encode(manager.getPassword()),
-                getAuthorities(List.of("ROLE_USER")));*/
     }
 
     private List<GrantedAuthority> getAuthorities(List<String> roles) {
@@ -48,6 +40,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         return authorities;
     }
-
-
 }

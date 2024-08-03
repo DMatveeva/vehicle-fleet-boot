@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface VehicleCoordinateRepository extends JpaRepository<VehicleCoordinate, Integer> {
     List<VehicleCoordinate> findAllByVehicleAndVisitedBetween(Vehicle vehicle, LocalDateTime startUTC,
-                                                              LocalDateTime endUTC);
+            LocalDateTime endUTC);
 
     List<VehicleCoordinate> findAllByTrackOrderByVisited(Track track);
 }

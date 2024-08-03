@@ -43,6 +43,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
@@ -89,13 +90,7 @@
             <artifactId>hibernate-spatial</artifactId>
             <version>6.1.6.Final</version>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-
+        
         <!--JSON-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -154,15 +149,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.2.224</version>
-            <scope>test</scope>
-        </dependency>
-
 
         <!--GEO-->
         <!-- https://mvnrepository.com/artifact/com.vividsolutions/jts -->

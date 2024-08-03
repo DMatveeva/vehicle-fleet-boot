@@ -17,15 +17,4 @@ public class SecurityUtils {
         User user = (User) auth.getPrincipal();
         return user.getUsername();
     }
-
-     /*
-
-    public static AuthorizedManager get() {
-        return requireNonNull(safeGet(), "No authorized user found");
-    }
-
-    public static Manager getAuthManager() {
-        return get().getManager();
-    }*/
-
 }

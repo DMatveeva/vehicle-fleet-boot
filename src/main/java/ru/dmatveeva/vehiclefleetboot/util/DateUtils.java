@@ -23,13 +23,31 @@ public class DateUtils {
         ZonedDateTime zdtUtc = ldtUtc.atZone(ZoneId.of("UTC"));
         return zdtUtc.withZoneSameInstant(ZoneId.of(tz));
     }
-
-    // MM-dd-yyyy
     public static LocalDate getLocalDateFromString(String s) {
-        String[] arrStart = s.split("/");
-        int month = Integer.parseInt(arrStart[0]);
-        int day = Integer.parseInt(arrStart[1]);
-        int year = Integer.parseInt(arrStart[2]);
-        return LocalDate.of(year, month, day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return LocalDate.parse(s, formatter);
+    }
+
+    public static LocalDate getStartForReport(String period, LocalDate start) {
+        return switch (period) {
+            case "year" -> LocalDate.of(start.getYear(), 1, 1);
+            case "month" -> LocalDate.of(start.getYear(), start.getMonth(), 1);
+            case "day" -> start;
+            default -> throw new IllegalArgumentException("specify period : year, month, day)");
+        };
+    }
+
+    public static LocalDate getEndForReport(String period, LocalDate end) {
+        LocalDate newEnd;
+        switch (period) {
+            case "year" -> newEnd = LocalDate.of(end.getYear(), 12, 31);
+            case "month" -> {
+                int lastDayOfMonth = end.getMonth().length(end.isLeapYear());
+                newEnd = LocalDate.of(end.getYear(), end.getMonth(), lastDayOfMonth);
+            }
+            case "day" -> newEnd = end;
+            default -> throw new IllegalArgumentException("specify period : year, month, day)");
+        }
+        return newEnd;
     }
 }

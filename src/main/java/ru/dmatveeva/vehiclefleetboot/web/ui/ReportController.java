@@ -1,12 +1,12 @@
 package ru.dmatveeva.vehiclefleetboot.web.ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.dmatveeva.vehiclefleetboot.repository.jdbc.JdbcReportRepository;
-import ru.dmatveeva.vehiclefleetboot.service.ReportService;
 import ru.dmatveeva.vehiclefleetboot.to.MileageReport;
 import ru.dmatveeva.vehiclefleetboot.to.Report;
 import ru.dmatveeva.vehiclefleetboot.util.DateUtils;
@@ -19,13 +19,8 @@ import java.util.Map;
 
 public class ReportController {
 
-    public final JdbcReportRepository reportRepository;
-    public final ReportService reportService;
-
-    public ReportController(JdbcReportRepository reportRepository, ReportService reportService) {
-        this.reportRepository = reportRepository;
-        this.reportService = reportService;
-    }
+    @Autowired
+    private JdbcReportRepository reportRepository;
 
     @PostMapping("/generate")
     public String generate(@RequestParam("type") String type,
@@ -37,8 +32,8 @@ public class ReportController {
 
         int vehicleId = Integer.parseInt(vehicleIdS);
 
-        LocalDate newStart = reportService.getStart(period, DateUtils.getLocalDateFromString(start));
-        LocalDate newEnd = reportService.getEnd(period, DateUtils.getLocalDateFromString(end));
+        LocalDate newStart = DateUtils.getStartForReport(period, DateUtils.getLocalDateFromString(start));
+        LocalDate newEnd = DateUtils.getEndForReport(period, DateUtils.getLocalDateFromString(end));
         Map<String, Integer> reportResults = switch (period) {
             case "year" -> reportRepository.getReportResultsForYear(vehicleId, newStart, newEnd);
             case "month" -> reportRepository.getReportResultsForMonth(vehicleId, newStart, newEnd);
