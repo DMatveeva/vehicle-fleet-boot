@@ -1,4 +1,3 @@
-INSERT INTO public.tracks (id, vehicle_id, started, finished) VALUES (100019, 100005, '2008-01-01 18:00:00.000000', '2008-01-01 22:00:00.000000');
 INSERT INTO public.tracks (id, vehicle_id, started, finished) VALUES (100020, 100006, '2009-01-01 17:00:00.000000', '2009-01-01 23:00:00.000000');
 INSERT INTO public.tracks (id, vehicle_id, started, finished) VALUES (100040, 100006, '2020-07-27 05:45:53.000000', '2020-07-27 06:26:13.000000');
 INSERT INTO public.tracks (id, vehicle_id, started, finished) VALUES (100283, 100006, '2019-09-28 06:31:42.000000', '2019-09-28 06:48:02.000000');

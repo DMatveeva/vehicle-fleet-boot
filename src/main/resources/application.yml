@@ -48,3 +48,11 @@ spring:
         request:
           timeout:
             ms: 1000
+---
+spring:
+  profiles:
+    active: "docker"
+  datasource:
+    url: jdbc:postgresql://db-app:5432/postgres
+  kafka:
+    bootstrap-servers: kafka:29092

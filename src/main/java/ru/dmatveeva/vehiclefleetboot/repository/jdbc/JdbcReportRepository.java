@@ -36,7 +36,7 @@ public class JdbcReportRepository {
                 "       to_char(visited, 'yyyy') y, " +
                 "       LEAD(position, 1) OVER (ORDER BY visited) AS lead " +
                 "FROM vehicle_coordinates " +
-                "where vehicle_id = ?" +
+                "where vehicle_id = ? " +
                 "and visited >= ? and visited <= ?) t) t1 " +
                 "group by y", id, start, end);
         for (Map m : queryResults) {
@@ -59,7 +59,7 @@ public class JdbcReportRepository {
                 "       to_char(visited, 'yyyy-MM') m, " +
                 "       LEAD(position, 1) OVER (ORDER BY visited) AS lead " +
                 "FROM vehicle_coordinates " +
-                "where vehicle_id = ?" +
+                "where vehicle_id = ? " +
                 "and visited >= ? and visited <= ?) t) t1 " +
                 "group by m", id, start, end);
         for (Map m : queryResults) {
@@ -82,7 +82,7 @@ public class JdbcReportRepository {
                 "       to_char(visited, 'yyyy-MM-dd') d, " +
                 "       LEAD(position, 1) OVER (ORDER BY visited) AS lead " +
                 "FROM vehicle_coordinates " +
-                "where vehicle_id = ?" +
+                "where vehicle_id = ? " +
                 "and visited >= ? and visited <= ?) t) t1 " +
                 "group by d", id, start, end);
         for (Map m : queryResults) {
