@@ -54,6 +54,6 @@ spring:
     activate:
       on-profile: "docker"
   datasource:
-    url: jdbc:postgresql://db-app:5432/postgres
+    url: jdbc:postgresql://db-app:5433/postgres
   kafka:
     bootstrap-servers: kafka:29092
