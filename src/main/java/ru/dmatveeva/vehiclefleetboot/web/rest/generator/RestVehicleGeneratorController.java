@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dmatveeva.vehiclefleetboot.service.generate.VehicleGeneratorService;
-import ru.dmatveeva.vehiclefleetboot.to.VehicleGeneratorParamsTo;
+import ru.dmatveeva.vehiclefleetboot.to.VehicleGeneratorRequestDto;
 
 @RestController
 @RequestMapping(value = "/rest/generator/vehicle", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -17,7 +17,7 @@ public class RestVehicleGeneratorController {
     private VehicleGeneratorService vehicleGeneratorService;
 
     @PostMapping(value = "/generate", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void generate(@RequestBody VehicleGeneratorParamsTo vehicleGeneratorParams) {
+    public void generate(@RequestBody VehicleGeneratorRequestDto vehicleGeneratorParams) {
         vehicleGeneratorService.generateVehiclesForEnterprises(vehicleGeneratorParams.getEntepriseIds(),
                 vehicleGeneratorParams.getNumVehicles());
     }

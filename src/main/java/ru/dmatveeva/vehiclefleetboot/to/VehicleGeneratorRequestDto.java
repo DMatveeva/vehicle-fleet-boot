@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class VehicleGeneratorParamsTo {
+public class VehicleGeneratorRequestDto {
     @JsonProperty
     List<Integer> entepriseIds;
 

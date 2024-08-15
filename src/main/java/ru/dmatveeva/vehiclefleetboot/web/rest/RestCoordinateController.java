@@ -22,7 +22,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/rest/coordinates", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/rest/coordinate", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class RestCoordinateController {
     @Autowired

@@ -109,4 +109,16 @@ public class CoordinateUtils {
 
         return new double[]{cLat, cLon};
     }
+
+    public static VehicleCoordinate getStart(List<VehicleCoordinate> coordinates) {
+        return coordinates.stream()
+                .min(Comparator.comparing(VehicleCoordinate::getVisited))
+                .orElse(null);
+    }
+
+    public static VehicleCoordinate getFinish(List<VehicleCoordinate> coordinates) {
+        return coordinates.stream()
+                .max(Comparator.comparing(VehicleCoordinate::getVisited))
+                .orElse(null);
+    }
 }

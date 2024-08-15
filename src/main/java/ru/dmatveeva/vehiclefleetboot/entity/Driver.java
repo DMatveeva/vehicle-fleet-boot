@@ -13,7 +13,6 @@ import ru.dmatveeva.vehiclefleetboot.entity.vehicle.Vehicle;
 
 import java.math.BigDecimal;
 
-
 @Entity
 @Table(name = "drivers")
 @Getter

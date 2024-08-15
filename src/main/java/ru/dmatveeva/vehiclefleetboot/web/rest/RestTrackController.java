@@ -15,12 +15,15 @@ import ru.dmatveeva.vehiclefleetboot.entity.vehicle.VehicleCoordinate;
 import ru.dmatveeva.vehiclefleetboot.repository.TrackRepository;
 import ru.dmatveeva.vehiclefleetboot.repository.VehicleCoordinateRepository;
 import ru.dmatveeva.vehiclefleetboot.repository.VehicleRepository;
+import ru.dmatveeva.vehiclefleetboot.to.TrackWithAddressDto;
 import ru.dmatveeva.vehiclefleetboot.to.VehicleCoordinateTo;
 import ru.dmatveeva.vehiclefleetboot.util.CoordinateUtils;
+import ru.dmatveeva.vehiclefleetboot.util.TripUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +53,26 @@ public class RestTrackController {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         return CoordinateUtils.getCoordinatesTosWithTimezone(coordinates, enterprise.getLocalTimeZone());
+    }
+
+    @GetMapping()
+    public List<TrackWithAddressDto> getTripsByVehicleAndPeriod(@RequestParam int vehicleId,
+            @RequestParam(name = "start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startEnterpriseZoned,
+            @RequestParam(name = "end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endEnterpriseZoned) {
+
+        log.info("Getting all trips for vehicle {} started after {} and finished before {}", vehicleId, startEnterpriseZoned, endEnterpriseZoned);
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow();
+        Enterprise enterprise = vehicle.getEnterprise();
+        List<Track> tracks = getTracksByVehicleAndTimePeriod(vehicle, startEnterpriseZoned, endEnterpriseZoned);
+
+        List<TrackWithAddressDto> trips = new ArrayList<>();
+        for (Track track : tracks) {
+            List<VehicleCoordinate> coordinates = coordinateRepository.findAllByTrackOrderByVisited(track);
+            VehicleCoordinate start = CoordinateUtils.getStart(coordinates);
+            VehicleCoordinate finish = CoordinateUtils.getFinish(coordinates);
+            trips.add(TripUtils.getTripToLocalizedFromTrack(track, start, finish, enterprise.getLocalTimeZone()));
+        }
+        return trips;
     }
 
     private List<Track> getTracksByVehicleAndTimePeriod(Vehicle vehicle, ZonedDateTime start, ZonedDateTime end) {

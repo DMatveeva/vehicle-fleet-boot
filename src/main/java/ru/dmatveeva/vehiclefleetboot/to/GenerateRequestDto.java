@@ -12,6 +12,9 @@ public class GenerateRequestDto {
     Integer vehicleId;
 
     @JsonProperty
+    Integer trackId;
+
+    @JsonProperty
     double[] start;
 
     @JsonProperty

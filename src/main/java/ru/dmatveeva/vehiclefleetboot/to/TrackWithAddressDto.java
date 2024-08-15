@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TripTo {
+public class TrackWithAddressDto {
     private Integer vehicleId;
 
     @JsonProperty

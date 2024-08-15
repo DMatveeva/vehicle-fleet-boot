@@ -11,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import ru.dmatveeva.vehiclefleetboot.entity.Track;
 import ru.dmatveeva.vehiclefleetboot.entity.vehicle.VehicleCoordinate;
-import ru.dmatveeva.vehiclefleetboot.to.TripTo;
+import ru.dmatveeva.vehiclefleetboot.to.TrackWithAddressDto;
 import ru.dmatveeva.vehiclefleetboot.to.VehicleCoordinateWithAddressTo;
 
 import java.io.IOException;
@@ -49,18 +49,18 @@ public class TripUtils {
                 .collect(Collectors.joining("&"));
     }
 
-    public static TripTo getTripToLocalizedFromTrack(Track track, VehicleCoordinate start, VehicleCoordinate finish, String tz) {
+    public static TrackWithAddressDto getTripToLocalizedFromTrack(Track track, VehicleCoordinate start, VehicleCoordinate finish, String tz) {
         ZonedDateTime startedZdt = DateUtils.getZdtFromLdtInUtc(track.getStarted(), tz);
         ZonedDateTime finishedZdt = DateUtils.getZdtFromLdtInUtc(track.getFinished(), tz);
 
-        TripTo tripTo = new TripTo();
-        tripTo.setStarted(startedZdt);
-        tripTo.setFinished(finishedZdt);
-        tripTo.setZone(tz);
-        tripTo.setVehicleId(track.getVehicle().getId());
-        tripTo.setStart(getToWithAddress(start));
-        tripTo.setFinish(getToWithAddress(finish));
-        return tripTo;
+        TrackWithAddressDto trackWithAddressDto = new TrackWithAddressDto();
+        trackWithAddressDto.setStarted(startedZdt);
+        trackWithAddressDto.setFinished(finishedZdt);
+        trackWithAddressDto.setZone(tz);
+        trackWithAddressDto.setVehicleId(track.getVehicle().getId());
+        trackWithAddressDto.setStart(getToWithAddress(start));
+        trackWithAddressDto.setFinish(getToWithAddress(finish));
+        return trackWithAddressDto;
 
     }
 

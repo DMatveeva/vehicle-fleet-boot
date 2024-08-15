@@ -41,8 +41,22 @@ public class RestVehicleController {
     @Autowired private ManagerRepository managerRepository;
     @Autowired private VehicleService vehicleService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(TimeZone timezone, @PathVariable Integer id) {
+        Vehicle vehicle;
+        var vehicleOpt = vehicleRepository.findById(id);
+        if (vehicleOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle not found");
+        }
+        vehicle = vehicleOpt.get();
+        Manager manager = managerRepository.findByLogin(SecurityUtils.getUserName());
+        List<Enterprise> enterprises = manager.getEnterprises();
+        boolean hasAccess = enterprises.contains(vehicle.getEnterprise());
+        return hasAccess ? ResponseEntity.ok(VehicleUtils.getVehicleToWithLocalTime(vehicle, timezone.getID())) : ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
+    }
+
     @GetMapping()
-    public List<VehicleTo> getAll() {
+    public List<VehicleTo> getAll(TimeZone timezone) {
         log.info("Get all vehicles");
 
         Manager manager = managerRepository.findByLogin(SecurityUtils.getUserName());
@@ -52,10 +66,10 @@ public class RestVehicleController {
             vehicles.addAll(vehicleRepository.findAllByEnterprise(enterprise));
         }
         log.info("All vehicles {}", vehicles);
-        return VehicleUtils.getVehicleTos(vehicles);
+        return VehicleUtils.getVehicleTosWithLocalTime(vehicles, timezone.getID());
     }
 
-    @GetMapping("/page")
+    @GetMapping("/pageable")
     public List<VehicleTo> getAll(TimeZone timezone,
                                            @RequestParam int offset, @RequestParam int pageSize) {
         List<VehicleTo> vehicleTos = new ArrayList<>();
@@ -73,19 +87,19 @@ public class RestVehicleController {
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleTo> create(@RequestBody VehicleTo vehicleTo) {
+    public ResponseEntity<VehicleTo> create(TimeZone timezone, @RequestBody VehicleTo vehicleTo) {
         log.info("Create new vehicle");
-        return createOrUpdate(vehicleTo);
+        return createOrUpdate(vehicleTo, timezone);
     }
 
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleTo> update(@RequestBody VehicleTo vehicleTo) {
-        return createOrUpdate(vehicleTo);
+    public ResponseEntity<VehicleTo> update(TimeZone timezone, @RequestBody VehicleTo vehicleTo) {
+        return createOrUpdate(vehicleTo, timezone);
     }
 
-    private  ResponseEntity<VehicleTo> createOrUpdate(VehicleTo vehicleTo) {
+    private  ResponseEntity<VehicleTo> createOrUpdate(VehicleTo vehicleTo, TimeZone timezone) {
 
-        Vehicle created = vehicleService.create(vehicleTo);
+        Vehicle created = vehicleService.create(vehicleTo, timezone);
         VehicleTo createdTo = VehicleUtils.getVehicleTo(created);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

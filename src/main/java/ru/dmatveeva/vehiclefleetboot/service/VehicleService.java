@@ -15,8 +15,11 @@ import ru.dmatveeva.vehiclefleetboot.to.VehicleTo;
 import ru.dmatveeva.vehiclefleetboot.util.SecurityUtils;
 import ru.dmatveeva.vehiclefleetboot.util.VehicleUtils;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service
 @Slf4j
@@ -50,12 +53,17 @@ public class VehicleService {
     EnterpriseRepository enterpriseRepository;
 
     @SneakyThrows
-    public Vehicle create(VehicleTo vehicleTo) {
+    public Vehicle create(VehicleTo vehicleTo, TimeZone timezone) {
         log.info("Create new vehicle");
 
         Manager manager = managerRepository.findByLogin(SecurityUtils.getUserName());
-        List<Enterprise> enterprises = manager.getEnterprises();
         VehicleUtils.checkEnterpriseIsConsistent(manager, vehicleTo.getEnterpriseId());
+
+        LocalDateTime ldt = vehicleTo.getPurchaseDate();
+        LocalDateTime utc = ldt.atZone(ZoneId.of(timezone.getID()))
+                .withZoneSameInstant(ZoneId.of("UTC"))
+                .toLocalDateTime();
+        vehicleTo.setPurchaseDate(utc);
 
         Vehicle newVehicle = VehicleUtils.getVehicleFromTo(vehicleTo);
         var model = vehicleModelRepository.findById(vehicleTo.getModelId()).orElseThrow();

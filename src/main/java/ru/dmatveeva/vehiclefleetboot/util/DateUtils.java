@@ -24,7 +24,7 @@ public class DateUtils {
         return zdtUtc.withZoneSameInstant(ZoneId.of(tz));
     }
     public static LocalDate getLocalDateFromString(String s) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         return LocalDate.parse(s, formatter);
     }
 
