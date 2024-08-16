@@ -1,0 +1,2 @@
+FROM postgis/postgis:16-master
+EXPOSE 5432

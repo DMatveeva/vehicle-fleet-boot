@@ -48,9 +48,6 @@ services:
       - "kafka"
 
   db-app:
-    build:
-      context: .
-      dockerfile: Dockerfile-pg
     image: darya2019/database-fleet
     networks:
       - kafka-net
@@ -77,9 +74,7 @@ services:
       retries: 5
 
   v-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: darya2019/vehicle-fleet-service
     networks:
       - kafka-net
     ports:
@@ -88,6 +83,13 @@ services:
       - 8080
     depends_on:
       - "db-app"
+      - "kafka"
+
+  generator-app:
+    image: darya2019/coordinate-service
+    networks:
+      - kafka-net
+    depends_on:
       - "kafka"
 
 volumes:
